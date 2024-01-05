@@ -63,8 +63,9 @@ class Tile:
                 self.core.player.stop(self)
 
     def addPlant(self):
-        if self.plant is None:
-            plant = Plant(self.core, self, "beetroot")
+        if self.plant is None and self.core.player.inventory["seeds"][self.core.seedsUI.seedstring] > 0:
+            plant = Plant(self.core, self, self.core.seedsUI.seedstring)
+            self.core.player.inventory["seeds"][self.core.seedsUI.seedstring] -= 1
             self.plant = plant
 
     def changeImage(self):

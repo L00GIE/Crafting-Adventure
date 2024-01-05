@@ -16,6 +16,7 @@ class Player:
         self.running = False
         self.collider = Collider(self, debug=False)
         self.initSprites()
+        self.initInventory()
 
     def loop(self):
         self.idle()
@@ -79,6 +80,23 @@ class Player:
                 return
             self.currentanim = self.walkRightAnim
             self.currenthairanim = self.walkRightHairAnim
+
+    def initInventory(self):
+        self.inventory = {
+            "seeds": {
+                "beetroot": 20,
+                "cabbage": 20,
+                "carrot": 20,
+                "cauliflower": 20,
+                "kale": 20,
+                "parsnip": 20,
+                "potato": 20,
+                "pumpkin": 20,
+                "radish": 20,
+                "sunflower": 20,
+                "wheat": 20
+            }
+        }
 
     def initSprites(self):
         idlestrip = pygame.image.load("data/assets/Characters/Human/IDLE/base_idle_strip9.png")
