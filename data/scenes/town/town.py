@@ -1,3 +1,4 @@
+from data.building import Building
 from lib.scene import Scene
 import pygame
 
@@ -32,4 +33,5 @@ class Town(Scene):
         self.add(self.tilemap, behindplayer=True)
 
     def initClutter(self):
+        self.add(Building(self.core, self.core.texturemanager.green_building, "home", (600, 0)))
         self.clutterInit = True

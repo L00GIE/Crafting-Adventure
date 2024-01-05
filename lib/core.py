@@ -35,7 +35,7 @@ class Core:
             self.cursor = Cursor(self)
         if self.cursor not in self.scene.objects:
             self.scene.add(self.cursor)
-
+        
         self.scene.loop()
 
     def initScenes(self):

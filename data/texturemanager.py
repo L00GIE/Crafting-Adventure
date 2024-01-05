@@ -16,3 +16,6 @@ class TextureManager:
         self.fencecorner = pygame.transform.scale(self.tileset.subsurface(608, 16, 16, 16), (48, 48)) # fence corner 6
         self.fencecorneralt = pygame.transform.scale(self.tileset.subsurface(656, 16, 16, 16), (48, 48)) # fence corner alt 7
         self.forest = pygame.transform.scale(self.tileset.subsurface(816, 16, 32, 32), (48, 48)) # forest 8
+        self.houseside = pygame.transform.scale(self.tileset.subsurface(304, 320, 16, 16), (48, 48)) # green house side 9
+        self.housesideend = pygame.transform.scale(self.tileset.subsurface(304, 336, 16, 16), (48, 48)) # green house side end 10
+        self.green_building = pygame.transform.scale_by(self.tileset.subsurface(520, 290, 32, 64), 3)
