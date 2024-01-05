@@ -1,6 +1,6 @@
 <h1>Crafting Adventure</h1>
 <p>A stardew-inspired crafting, farming, building adventure game.<br>Currently a WIP</p>
-<title>Controls:</title>
+<h6>Controls:</h6>
 <ul>
   <li>WSAD for movement</li>
   <li>Shift to run</li>
