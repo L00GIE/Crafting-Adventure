@@ -3,7 +3,7 @@ from lib.scene import Scene
 from lib.tilemap import TileMap
 import pygame
 
-class test(Scene):
+class Home(Scene):
     def __init__(self, core):
         self.core = core
         self.tilemap = None
@@ -16,10 +16,18 @@ class test(Scene):
             self.initTilemap()
         if not self.clutterInit:
             self.initClutter()
+        self.checkpos()
         super().loop()
 
+    def checkpos(self):
+        if self.core.player.x >= self.core.screen.get_width():
+            self.core.changeScene("town")
+
+    def positionPlayer(self):
+        self.core.player.x = self.core.screen.get_width() - 100
+
     def initTilemap(self):
-        self.tilemap = TileMap(self.core, "data/scenes/test/test.json")
+        self.tilemap = TileMap(self.core, "data/scenes/home/home.json")
         self.add(self.tilemap, behindplayer=True)
 
     def initClutter(self):

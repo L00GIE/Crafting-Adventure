@@ -80,7 +80,6 @@ class Tile:
             self.core.texturemanager.fencecorneralt,
             self.core.texturemanager.forest
         ]
-        print(tiles[self.tileindex])
         self.image = pygame.transform.rotate(tiles[self.tileindex], self.rotation)
 
     def checkBarrier(self):

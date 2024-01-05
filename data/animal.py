@@ -52,9 +52,10 @@ class Animal:
             elif direction == 3:
                 self.y -= self.speed
                 self.currentAnim = self.animFlipped
-        for tile in self.core.scene.tilemap.tiles:
-            if self.collider.colliding(tile) and tile.barrier:
-                self.stop(tile)
+        if self.core.scene == self.core.scenes["home"]:
+            for tile in self.core.scene.tilemap.tiles:
+                if self.collider.colliding(tile) and tile.barrier:
+                    self.stop(tile)
 
     def initSprites(self):
         strip = pygame.image.load(self.spritesheet)
