@@ -2,6 +2,7 @@ import pygame
 from data.player import Player
 from data.scenes.test.test import test
 from data.seedsui import SeedsUI
+from data.texturemanager import TextureManager
 from lib.cursor import Cursor
 
 class Core:
@@ -12,6 +13,7 @@ class Core:
         self.scene = None
         self.player = None
         self.seedsUI = None
+        self.texturemanager = TextureManager()
         self.initScenes()
 
     def loop(self, events):

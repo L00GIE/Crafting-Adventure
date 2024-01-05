@@ -69,18 +69,18 @@ class Tile:
             self.plant = plant
 
     def changeImage(self):
-        ss = pygame.image.load("data/assets/Tileset/spr_tileset_sunnysideworld_16px.png")
         tiles = [
-            pygame.transform.scale(ss.subsurface(32, 32, 32, 32), (48, 48)), # grass 0
-            pygame.transform.scale(ss.subsurface(320, 112, 32, 32), (48, 48)), # dirt 1
-            pygame.transform.scale(ss.subsurface(240, 32, 16, 16), (48, 48)), # dirt edge 2
-            pygame.transform.scale(ss.subsurface(512, 80, 16, 16), (48, 48)), # stump 3
-            pygame.transform.scale(ss.subsurface(623, 32, 16, 16), (48, 48)), # fence 4
-            pygame.transform.scale(ss.subsurface(607, 32, 16, 16), (48, 48)), # fence end 5
-            pygame.transform.scale(ss.subsurface(608, 16, 16, 16), (48, 48)), # fence corner 6
-            pygame.transform.scale(ss.subsurface(656, 16, 16, 16), (48, 48)), # fence corner alt 7
-            pygame.transform.scale(ss.subsurface(816, 16, 32, 32), (48, 48)), # forest 8
+            self.core.texturemanager.grass,
+            self.core.texturemanager.dirt,
+            self.core.texturemanager.dirtedge,
+            self.core.texturemanager.stump,
+            self.core.texturemanager.fence,
+            self.core.texturemanager.fenceend,
+            self.core.texturemanager.fencecorner,
+            self.core.texturemanager.fencecorneralt,
+            self.core.texturemanager.forest
         ]
+        print(tiles[self.tileindex])
         self.image = pygame.transform.rotate(tiles[self.tileindex], self.rotation)
 
     def checkBarrier(self):
