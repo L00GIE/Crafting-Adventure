@@ -34,14 +34,15 @@ class Tile:
     def cursorInteract(self):
         if self.core.cursor is None:
             return
-        if self.core.cursor.collider.colliding(self):
+        if self.core.cursor.collider.colliding(self): # player and cursor touching tile
             if self.tileindex == 0: # hovering over grass
                 self.core.cursor.cursor = self.core.cursor.shovel
             elif self.tileindex == 3: # hovering over stump
                 self.core.cursor.cursor = self.core.cursor.axe
+            elif self.tileindex == 1 and self.canplant and self.plant is None: # hovering over empty, plantable dirt
+                self.core.cursor.cursor = self.core.cursor.plant
             else:
                 self.core.cursor.cursor = self.core.cursor.pointer
-            self.highlight()
             
             for event in self.core.events:
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -60,10 +61,6 @@ class Tile:
         if self.barrier:
             if self.core.player.collider.colliding(self):
                 self.core.player.stop(self)
-
-    def highlight(self):
-        highlightrect = pygame.Rect(self.x - 2, self.y - 2, self.w + 4, self.h + 4)
-        pygame.draw.rect(self.core.screen, [0, 0, 0], highlightrect, 2)
 
     def addPlant(self):
         if self.plant is None:

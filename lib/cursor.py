@@ -27,3 +27,4 @@ class Cursor:
         self.pointer = pygame.transform.scale(ss.subsurface((610, 736, 16, 16)), (size, size))
         self.axe = pygame.transform.flip(pygame.transform.scale(ss.subsurface((672, 721, 16, 16)), (size, size)), True, False)
         self.shovel = pygame.transform.flip(pygame.transform.scale(ss.subsurface((672, 768, 16, 16)), (size, size)), True, False)
+        self.plant = pygame.transform.flip(pygame.transform.scale(ss.subsurface((656, 720, 16, 16)), (size, size)), True, False)
