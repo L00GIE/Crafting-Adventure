@@ -1,4 +1,5 @@
 import pygame
+from data.plant import Plant
 from lib.collider import Collider
 
 class Tile:
@@ -9,8 +10,8 @@ class Tile:
         self.y = pos[1]
         self.image = None
         self.tileindex = tileindex
+        self.rotation = rotation * -1
         self.changeImage()
-        self.image = pygame.transform.rotate(self.image, rotation * -1)
         self.w = self.image.get_width()
         self.h = self.image.get_height()
         if barrier is None:
@@ -18,6 +19,8 @@ class Tile:
         else:
             self.barrier = barrier
         self.trigger = trigger
+        self.canplant = False
+        self.plant = None
         self.collider = Collider(self, debug=False)
 
     def loop(self):
@@ -25,6 +28,8 @@ class Tile:
         self.cursorInteract()
         self.playerInteract()
         self.core.screen.blit(self.image, (self.x, self.y))
+        if self.plant is not None:
+            self.plant.loop()
 
     def cursorInteract(self):
         if self.core.cursor is None:
@@ -37,13 +42,19 @@ class Tile:
             else:
                 self.core.cursor.cursor = self.core.cursor.pointer
             self.highlight()
-            if pygame.mouse.get_pressed()[0]:
-                if self.tileindex == 0:
-                    self.tileindex = 1 # if grass, make dirt
-                if self.tileindex == 3:
-                    self.tileindex = 0 # if stump, make grass
-                self.changeImage()
-                self.barrier = self.checkBarrier()
+            
+            for event in self.core.events:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pygame.mouse.get_pressed()[0]:
+                        if self.tileindex == 0:
+                            self.tileindex = 1 # if grass, make dirt
+                            self.canplant = True
+                        elif self.tileindex == 1 and self.canplant: # if dirt, add plant
+                            self.addPlant()
+                        elif self.tileindex == 3:
+                            self.tileindex = 0 # if stump, make grass
+                        self.changeImage()
+                        self.barrier = self.checkBarrier()
 
     def playerInteract(self):
         if self.barrier:
@@ -53,6 +64,11 @@ class Tile:
     def highlight(self):
         highlightrect = pygame.Rect(self.x - 2, self.y - 2, self.w + 4, self.h + 4)
         pygame.draw.rect(self.core.screen, [0, 0, 0], highlightrect, 2)
+
+    def addPlant(self):
+        if self.plant is None:
+            plant = Plant(self.core, self, "beetroot")
+            self.plant = plant
 
     def changeImage(self):
         ss = pygame.image.load("data/assets/Tileset/spr_tileset_sunnysideworld_16px.png")
@@ -67,7 +83,7 @@ class Tile:
             pygame.transform.scale(ss.subsurface(656, 16, 16, 16), (48, 48)), # fence corner alt 7
             pygame.transform.scale(ss.subsurface(816, 16, 32, 32), (48, 48)), # forest 8
         ]
-        self.image = tiles[self.tileindex]
+        self.image = pygame.transform.rotate(tiles[self.tileindex], self.rotation)
 
     def checkBarrier(self):
         barriers = [3, 4, 5, 6, 7, 8]
