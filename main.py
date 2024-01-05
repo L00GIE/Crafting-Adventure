@@ -6,6 +6,9 @@ import pygame
 
 pygame.init()
 screen = pygame.display.set_mode((1366, 768))
+loading = pygame.transform.scale(pygame.image.load("data/assets/UI/loading.jpg"), (screen.get_width(), screen.get_height()))
+screen.blit(loading, (0, 0))
+pygame.display.update()
 clock = pygame.time.Clock()
 core = Core(screen)
 running = True

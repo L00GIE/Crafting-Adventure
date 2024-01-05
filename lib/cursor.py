@@ -22,7 +22,8 @@ class Cursor:
         self.core.screen.blit(self.cursor, (self.x, self.y))
 
     def initSprite(self):
+        size = 48
         ss = pygame.image.load("data/assets/Tileset/spr_tileset_sunnysideworld_16px.png")
-        self.pointer = ss.subsurface((610, 736, 16, 16))
-        self.axe = ss.subsurface((672, 721, 16, 16))
-        self.shovel = ss.subsurface((672, 768, 16, 16))
+        self.pointer = pygame.transform.scale(ss.subsurface((610, 736, 16, 16)), (size, size))
+        self.axe = pygame.transform.flip(pygame.transform.scale(ss.subsurface((672, 721, 16, 16)), (size, size)), True, False)
+        self.shovel = pygame.transform.flip(pygame.transform.scale(ss.subsurface((672, 768, 16, 16)), (size, size)), True, False)

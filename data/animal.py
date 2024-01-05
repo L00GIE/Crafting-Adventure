@@ -53,9 +53,8 @@ class Animal:
                 self.y -= self.speed
                 self.currentAnim = self.animFlipped
         for tile in self.core.scene.tilemap.tiles:
-            if hasattr(tile, "collider"):
-                if self.collider.colliding(tile):
-                    self.stop(tile)
+            if self.collider.colliding(tile) and tile.barrier:
+                self.stop(tile)
 
     def initSprites(self):
         strip = pygame.image.load(self.spritesheet)

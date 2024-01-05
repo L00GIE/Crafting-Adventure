@@ -36,19 +36,23 @@ class Tile:
                 self.core.cursor.cursor = self.core.cursor.axe
             else:
                 self.core.cursor.cursor = self.core.cursor.pointer
-            highlightrect = pygame.Rect(self.x - 2, self.y - 2, self.w + 4, self.h + 4)
-            pygame.draw.rect(self.core.screen, [0, 0, 0], highlightrect, 2)
+            self.highlight()
             if pygame.mouse.get_pressed()[0]:
                 if self.tileindex == 0:
                     self.tileindex = 1 # if grass, make dirt
                 if self.tileindex == 3:
                     self.tileindex = 0 # if stump, make grass
                 self.changeImage()
+                self.barrier = self.checkBarrier()
 
     def playerInteract(self):
         if self.barrier:
             if self.core.player.collider.colliding(self):
                 self.core.player.stop(self)
+
+    def highlight(self):
+        highlightrect = pygame.Rect(self.x - 2, self.y - 2, self.w + 4, self.h + 4)
+        pygame.draw.rect(self.core.screen, [0, 0, 0], highlightrect, 2)
 
     def changeImage(self):
         ss = pygame.image.load("data/assets/Tileset/spr_tileset_sunnysideworld_16px.png")
