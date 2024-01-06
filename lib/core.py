@@ -77,6 +77,8 @@ class Core:
             for tileindex in savedata["tiledata"][scene]:
                 if hasattr(self.scenes[scene], "tilemap"):
                     if self.scenes[scene].tilemap is not None:
-                        self.scenes[scene].tilemap.tiles[index].tileindex = tileindex
-                        self.scenes[scene].tilemap.tiles[index].changeImage()
+                        tile = self.scenes[scene].tilemap.tiles[index]
+                        tile.tileindex = tileindex
+                        tile.barrier = tile.checkBarrier()
+                        tile.changeImage()
                         index += 1
