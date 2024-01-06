@@ -20,3 +20,4 @@ class TextureManager:
         self.housesideend = pygame.transform.scale(self.tileset.subsurface(304, 336, 16, 16), (48, 48)) # green house side end 10
         self.woodfloor = pygame.transform.scale(self.tileset.subsurface(160, 160, 16, 16), (48, 48)) # wooden floor 11
         self.green_building = pygame.transform.scale_by(self.tileset.subsurface(520, 290, 32, 64), 3)
+        self.wood = pygame.transform.scale(self.tileset.subsurface(784, 176, 16, 16), (32, 32))

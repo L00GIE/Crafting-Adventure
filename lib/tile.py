@@ -1,4 +1,5 @@
 import pygame
+from data.item import Item
 from data.plant import Plant
 from lib.collider import Collider
 
@@ -21,6 +22,7 @@ class Tile:
         self.trigger = trigger
         self.canplant = False
         self.plant = None
+        self.item = None
         self.collider = Collider(self, debug=False)
 
     def loop(self):
@@ -30,6 +32,8 @@ class Tile:
         self.core.screen.blit(self.image, (self.x, self.y))
         if self.plant is not None:
             self.plant.loop()
+        if self.item is not None:
+            self.item.loop()
 
     def cursorInteract(self):
         if self.core.cursor is None:
@@ -54,6 +58,8 @@ class Tile:
                             self.addPlant()
                         elif self.tileindex == 3:
                             self.tileindex = 0 # if stump, make grass
+                            self.item = Item(self.core, self, self.core.texturemanager.wood)
+                            self.barrier = False
                         self.changeImage()
                         self.barrier = self.checkBarrier()
 

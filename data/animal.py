@@ -38,6 +38,7 @@ class Animal:
             self.y += self.speed
 
     def wanderAimlessly(self):
+        self.stayInScene()
         if random.randint(1, 100) == 1:
             direction = random.randint(0, 3)
             if direction == 0:
@@ -56,6 +57,16 @@ class Animal:
             for tile in self.core.scene.tilemap.tiles:
                 if self.collider.colliding(tile) and tile.barrier:
                     self.stop(tile)
+
+    def stayInScene(self):
+        if self.x < 0:
+            self.x = 0
+        if self.y < 0:
+            self.y = 0
+        if self.x > self.core.screen.get_width() - self.w:
+            self.x = self.core.screen.get_width() - self.w
+        if self.y > self.core.screen.get_height() - self.h:
+            self.y = self.core.screen.get_height() - self.h
 
     def initSprites(self):
         strip = pygame.image.load(self.spritesheet)
