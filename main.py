@@ -24,5 +24,6 @@ while running:
         pygame.display.set_caption(f"Crafting Adventure | {round(clock.get_fps(), 1)}")
         pygame.display.update()
 
+core.save()
 pygame.quit()
 sys.exit(0)

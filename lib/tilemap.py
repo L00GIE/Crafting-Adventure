@@ -24,4 +24,3 @@ class TileMap:
             for x in range(29):
                 self.tiles.append(Tile(self.core, (48 * x, 48 * y), tiledata[index], rotation=rotationdata[index]))
                 index += 1
-        print("map init")

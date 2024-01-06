@@ -23,3 +23,4 @@ class Building:
             return
         if self.core.player.collider.colliding(self):
             self.core.changeScene(self.scene)
+            self.core.scene.positionPlayer()
