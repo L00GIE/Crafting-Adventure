@@ -41,6 +41,11 @@ class InventoryUI:
                 self.core.screen.blit(img, (self.x + 600, ((img.get_height() + 20) * index) + 120))
                 self.core.screen.blit(title, (self.x + 610 + img.get_width(), ((img.get_height() + 20) * index) + 120))
                 index += 1
+            index = 0
+            img = pygame.transform.scale(pygame.image.load(f"data/assets/UI/money.png"), (32, 32))
+            title = self.font.render(f"{round(self.core.player.inventory['money'], 2)}", True, [0, 0, 0])
+            self.core.screen.blit(img, (self.x + 800, ((img.get_height() + 20) * index) + 120))
+            self.core.screen.blit(title, (self.x + 810 + img.get_width(), ((img.get_height() + 20) * index) + 120))
 
     def show(self):
         self.showing = True
