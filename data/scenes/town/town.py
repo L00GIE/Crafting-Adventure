@@ -10,6 +10,8 @@ class Town(Scene):
     def __init__(self, core):
         self.core = core
         self.tilemap = TileMap(self.core, "data/scenes/town/town.json")
+        for tile in self.tilemap.tiles:
+            tile.candig = False
         self.clutterInit = False
         self.leaves = None
         super().__init__()

@@ -1,4 +1,5 @@
 import pygame
+from data.inventoryui import InventoryUI
 from lib.animation import Animation
 from lib.collider import Collider
 
@@ -17,6 +18,7 @@ class Player:
         self.collider = Collider(self, debug=False)
         self.initSprites()
         self.initInventory()
+        self.inventoryui = InventoryUI(self.core)
 
     def loop(self):
         self.idle()
@@ -24,6 +26,7 @@ class Player:
         self.collider.updaterect(self.x, self.y, self.w, self.h)
         self.currentanim.play()
         self.currenthairanim.play()
+        self.inventoryui.loop()
 
     def checkMoving(self):
         keys = pygame.key.get_pressed()
@@ -46,6 +49,10 @@ class Player:
         if keys[pygame.K_d]:
             self.x += self.speed
             self.walk()
+        for event in self.core.events:
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_e:
+                    self.openInventory()
 
     def idle(self):
         self.currentanim = self.idleAnim
@@ -95,8 +102,32 @@ class Player:
                 "radish": 20,
                 "sunflower": 20,
                 "wheat": 20
-            }
+            },
+            "crops": {
+                "beetroot": 0,
+                "cabbage": 0,
+                "carrot": 0,
+                "cauliflower": 0,
+                "kale": 0,
+                "parsnip": 0,
+                "potato": 0,
+                "pumpkin": 0,
+                "radish": 0,
+                "sunflower": 0,
+                "wheat": 0
+            },
+            "items": {
+                "wood": 10,
+                "milk": 5
+            },
+            "money": 60.00
         }
+
+    def openInventory(self):
+        if self.inventoryui.showing:
+            self.inventoryui.hide()
+        else:
+            self.inventoryui.show()
 
     def initSprites(self):
         idlestrip = pygame.image.load("data/assets/Characters/Human/IDLE/base_idle_strip9.png")

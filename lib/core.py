@@ -17,6 +17,7 @@ class Core:
         self.seedsUI = None
         self.texturemanager = TextureManager()
         self.loaded = False
+        self.paused = False
         self.initScenes()
 
     def loop(self, events):

@@ -21,6 +21,7 @@ class Tile:
             self.barrier = barrier
         self.trigger = trigger
         self.canplant = False
+        self.candig = True
         self.plant = None
         self.item = None
         self.collider = Collider(self, debug=False)
@@ -39,7 +40,7 @@ class Tile:
         if self.core.cursor is None:
             return
         if self.core.cursor.collider.colliding(self): # player and cursor touching tile
-            if self.tileindex == 0: # hovering over grass
+            if self.tileindex == 0 and self.candig: # hovering over grass
                 self.core.cursor.cursor = self.core.cursor.shovel
             elif self.tileindex == 3: # hovering over stump
                 self.core.cursor.cursor = self.core.cursor.axe
@@ -51,14 +52,14 @@ class Tile:
             for event in self.core.events:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed()[0]:
-                        if self.tileindex == 0:
+                        if self.tileindex == 0 and self.candig:
                             self.tileindex = 1 # if grass, make dirt
                             self.canplant = True
                         elif self.tileindex == 1 and self.canplant: # if dirt, add plant
                             self.addPlant()
                         elif self.tileindex == 3:
-                            self.tileindex = 0 # if stump, make grass
-                            self.item = Item(self.core, self, self.core.texturemanager.wood)
+                            self.tileindex = 0 # if stump, make grass and drop wood
+                            self.item = Item(self.core, self, self.core.texturemanager.wood, "wood")
                             self.barrier = False
                         self.changeImage()
                         self.barrier = self.checkBarrier()
@@ -84,7 +85,10 @@ class Tile:
             self.core.texturemanager.fenceend,
             self.core.texturemanager.fencecorner,
             self.core.texturemanager.fencecorneralt,
-            self.core.texturemanager.forest
+            self.core.texturemanager.forest,
+            self.core.texturemanager.houseside,
+            self.core.texturemanager.housesideend,
+            self.core.texturemanager.woodfloor
         ]
         self.image = pygame.transform.rotate(tiles[self.tileindex], self.rotation)
 

@@ -3,10 +3,11 @@ import pygame
 
 class Item:
 
-    def __init__(self, core, tile, texture):
+    def __init__(self, core, tile, texture, type):
         self.core = core
         self.tile = tile
         self.texture = texture
+        self.type = type
         self.w = 16
         self.h = 16
         self.x = self.tile.x + ((48 / 2) - (self.w / 2))
@@ -35,3 +36,7 @@ class Item:
     def detectPickup(self):
         if self.core.player.collider.colliding(self):
             self.tile.item = None
+            if self.type in self.core.player.inventory["items"]:
+                self.core.player.inventory["items"][self.type] += 1
+            else:
+                self.core.player.inventory["items"][self.type] = 1

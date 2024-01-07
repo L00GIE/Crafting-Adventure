@@ -45,6 +45,7 @@ class Plant:
     def detectPickup(self):
         if self.core.player.collider.colliding(self):
             self.tile.plant = None
+            self.core.player.inventory["crops"][self.type] += 1
 
     def initSprite(self):
         img = f"data/assets/Elements/Crops/{self.type}_0{self.stage}.png"
