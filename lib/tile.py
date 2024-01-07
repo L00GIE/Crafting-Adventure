@@ -24,9 +24,11 @@ class Tile:
         self.candig = True
         self.plant = None
         self.item = None
+        self.timer = 0
         self.collider = Collider(self, debug=False)
 
     def loop(self):
+        self.timeDirt()
         self.collider.updaterect(self.x, self.y, self.w, self.h)
         self.cursorInteract()
         self.playerInteract()
@@ -35,6 +37,15 @@ class Tile:
             self.plant.loop()
         if self.item is not None:
             self.item.loop()
+
+    def timeDirt(self):
+        if self.tileindex == 1 and self.plant is None and self.canplant: # if dirt but no plant start timer
+            self.timer += 1
+            if self.timer > 1000: # if timer reaches 1000, turn back to grass
+                self.tileindex = 0
+                self.changeImage()
+        else:
+            self.timer = 0
 
     def cursorInteract(self):
         if self.core.cursor is None:
