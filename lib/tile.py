@@ -20,6 +20,7 @@ class Tile:
         else:
             self.barrier = barrier
         self.trigger = trigger
+        self.ispath = False
         self.canplant = False
         self.candig = True
         self.plant = None
@@ -39,7 +40,7 @@ class Tile:
             self.item.loop()
 
     def timeDirt(self):
-        if self.tileindex == 1 and self.plant is None and self.canplant: # if dirt but no plant start timer
+        if self.tileindex == 1 and self.plant is None and self.canplant and not self.ispath: # if dirt but no plant start timer
             self.timer += 1
             if self.timer > 10000: # if timer reaches amount, turn back to grass
                 self.tileindex = 0
@@ -55,7 +56,7 @@ class Tile:
                 self.core.cursor.cursor = self.core.cursor.shovel
             elif self.tileindex == 3: # hovering over stump
                 self.core.cursor.cursor = self.core.cursor.axe
-            elif self.tileindex == 1 and self.canplant and self.plant is None: # hovering over empty, plantable dirt
+            elif self.tileindex == 1 and self.canplant and self.plant is None and not self.ispath: # hovering over empty, plantable dirt that is not path
                 self.core.cursor.cursor = self.core.cursor.plant
             else:
                 self.core.cursor.cursor = self.core.cursor.pointer
@@ -66,7 +67,7 @@ class Tile:
                         if self.tileindex == 0 and self.candig:
                             self.tileindex = 1 # if grass, make dirt
                             self.canplant = True
-                        elif self.tileindex == 1 and self.canplant: # if dirt, add plant
+                        elif self.tileindex == 1 and self.canplant and not self.ispath: # if dirt and not path, add plant
                             self.addPlant()
                         elif self.tileindex == 3:
                             self.tileindex = 0 # if stump, make grass and drop wood

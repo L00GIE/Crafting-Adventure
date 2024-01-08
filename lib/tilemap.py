@@ -22,5 +22,8 @@ class TileMap:
         index = 0
         for y in range(16):
             for x in range(29):
-                self.tiles.append(Tile(self.core, (48 * x, 48 * y), tiledata[index], rotation=rotationdata[index]))
+                tile = Tile(self.core, (48 * x, 48 * y), tiledata[index], rotation=rotationdata[index])
+                if tile.tileindex == 1:
+                    tile.ispath = True
+                self.tiles.append(tile)
                 index += 1

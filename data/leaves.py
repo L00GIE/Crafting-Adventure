@@ -12,7 +12,7 @@ class Leaves:
             leaf.loop()
             if leaf.y >= self.core.screen.get_height():
                 self.leaves.remove(leaf)
-        if len(self.leaves) < 20 and random.randint(1, 20) == 1:
+        if len(self.leaves) < 20 and random.randint(1, 40) == 1:
             randx = random.randint(0, self.core.screen.get_width())
             self.leaves.append(Leaf(self.core, self.leaf, (randx, 0)))
 
@@ -25,7 +25,7 @@ class Leaf:
         self.x = pos[0]
         self.startx = self.x
         self.y = pos[1]
-        self.speed = 2
+        self.speed = 1
         self.goingleft = False
 
     def loop(self):
