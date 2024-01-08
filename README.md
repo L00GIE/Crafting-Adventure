@@ -6,4 +6,6 @@
   <li>Shift to run</li>
   <li>Mouse to interact</li>
   <li>Mouse scroll to change seed type</li>
+  <li>E to open inventory</li>
 </ul>
+<p>Game auto saves upon closing and loads upon opening</p>
