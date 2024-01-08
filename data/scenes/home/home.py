@@ -40,5 +40,7 @@ class Home(Scene):
         self.add(Animal(self.core, (1200, 700), "data/assets/Elements/Animals/spr_deco_cow_strip4.png"))
         self.add(Animal(self.core, (1100, 500), "data/assets/Elements/Animals/spr_deco_cow_strip4.png"))
         self.add(Animal(self.core, (200, 200), "data/assets/Elements/Animals/spr_deco_cow_strip4.png"))
-        self.add(Animal(self.core, (300, 400), "data/assets/Elements/Animals/spr_deco_cow_strip4.png"))
+        self.add(Animal(self.core, (300, 400), "data/assets/Elements/Animals/spr_deco_sheep_01_strip4.png"))
+        self.add(Animal(self.core, (200, 300), "data/assets/Elements/Animals/spr_deco_cow_strip4.png"))
+        self.add(Animal(self.core, (300, 300), "data/assets/Elements/Animals/spr_deco_sheep_01_strip4.png"))
         self.clutterInit = True

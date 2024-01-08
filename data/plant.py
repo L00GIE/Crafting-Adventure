@@ -19,18 +19,19 @@ class Plant:
         self.goingup = True
         self.floatheight = 10
 
-    def loop(self):
+    def loop(self, visible=True):
         self.timer += 1
         if self.timer >= 1000:
             self.timer = 0
             if self.stage < 5:
                 self.stage += 1
                 self.initSprite()
-        if self.stage >= 5:
-            self.float()
-            self.detectPickup()
-        self.collider.updaterect(self.x, self.y, self.w, self.h)
-        self.core.screen.blit(self.sprite, (self.x, self.y))
+        if visible:
+            if self.stage >= 5:
+                self.float()
+                self.detectPickup()
+            self.collider.updaterect(self.x, self.y, self.w, self.h)
+            self.core.screen.blit(self.sprite, (self.x, self.y))
 
     def float(self):
         if self.y > self.starty - self.floatheight and self.goingup:

@@ -38,6 +38,7 @@ class SeedsUI:
             "cauliflower",
             "kale",
             "parsnip",
+            "potato",
             "pumpkin",
             "radish",
             "sunflower",

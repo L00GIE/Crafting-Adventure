@@ -41,7 +41,7 @@ class Tile:
     def timeDirt(self):
         if self.tileindex == 1 and self.plant is None and self.canplant: # if dirt but no plant start timer
             self.timer += 1
-            if self.timer > 1000: # if timer reaches 1000, turn back to grass
+            if self.timer > 10000: # if timer reaches amount, turn back to grass
                 self.tileindex = 0
                 self.changeImage()
         else:
@@ -50,7 +50,7 @@ class Tile:
     def cursorInteract(self):
         if self.core.cursor is None:
             return
-        if self.core.cursor.collider.colliding(self): # player and cursor touching tile
+        if self.core.cursor.collider.colliding(self): # cursor touching tile
             if self.tileindex == 0 and self.candig: # hovering over grass
                 self.core.cursor.cursor = self.core.cursor.shovel
             elif self.tileindex == 3: # hovering over stump
@@ -62,7 +62,7 @@ class Tile:
             
             for event in self.core.events:
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if pygame.mouse.get_pressed()[0]:
+                    if pygame.mouse.get_pressed()[0] and self.core.player.collider.colliding(self):
                         if self.tileindex == 0 and self.candig:
                             self.tileindex = 1 # if grass, make dirt
                             self.canplant = True

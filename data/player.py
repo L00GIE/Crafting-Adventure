@@ -18,7 +18,6 @@ class Player:
         self.collider = Collider(self, debug=False)
         self.initSprites()
         self.initInventory()
-        self.inventoryui = InventoryUI(self.core)
 
     def loop(self):
         self.idle()
@@ -26,7 +25,6 @@ class Player:
         self.collider.updaterect(self.x, self.y, self.w, self.h)
         self.currentanim.play()
         self.currenthairanim.play()
-        self.inventoryui.loop()
 
     def checkMoving(self):
         keys = pygame.key.get_pressed()
@@ -38,21 +36,23 @@ class Player:
             self.running = False
             self.speed = self.minspeed
         if keys[pygame.K_w]:
-            self.y -= self.speed
-            self.walk(True)
+            self.move("y", self.speed * -1)
         if keys[pygame.K_s]:
-            self.y += self.speed
-            self.walk()
+            self.move("y", self.speed)
         if keys[pygame.K_a]:
-            self.x -= self.speed
-            self.walk(True)
+            self.move("x", self.speed * -1)
         if keys[pygame.K_d]:
-            self.x += self.speed
+            self.move("x", self.speed)
+
+    def move(self, axis, delta):
+        if axis == "y":
+            self.y += delta
+        elif axis == "x":
+            self.x += delta
+        if delta < 0:
+            self.walk(True)
+        else:
             self.walk()
-        for event in self.core.events:
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_e:
-                    self.openInventory()
 
     def idle(self):
         self.currentanim = self.idleAnim
@@ -122,12 +122,6 @@ class Player:
             },
             "money": 60.00
         }
-
-    def openInventory(self):
-        if self.inventoryui.showing:
-            self.inventoryui.hide()
-        else:
-            self.inventoryui.show()
 
     def initSprites(self):
         idlestrip = pygame.image.load("data/assets/Characters/Human/IDLE/base_idle_strip9.png")

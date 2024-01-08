@@ -1,4 +1,5 @@
 import pygame, pickle, os
+from data.inventoryui import InventoryUI
 from data.player import Player
 from data.scenes.home.home import Home
 from data.scenes.store.store import Store
@@ -15,9 +16,9 @@ class Core:
         self.scene = None
         self.player = None
         self.seedsUI = None
+        self.inventoryUI = None
         self.texturemanager = TextureManager()
         self.loaded = False
-        self.paused = False
         self.initScenes()
 
     def loop(self, events):
@@ -31,18 +32,25 @@ class Core:
             self.scene.add(self.player)
         if self.seedsUI is None:
             self.seedsUI = SeedsUI(self)
-        if self.seedsUI not in self.scene.objects:
-            self.scene.add(self.seedsUI)
+        if self.inventoryUI is None:
+            self.inventoryUI = InventoryUI(self)
         if self.cursor is None:
             self.cursor = Cursor(self)
         if self.cursor not in self.scene.objects:
             self.scene.add(self.cursor)
         
         self.scene.loop()
+        self.seedsUI.loop()
+        self.inventoryUI.loop()
 
         if os.path.exists("game.save") and not self.loaded:
             self.load()
             self.loaded = True
+
+        for scene in self.scenes:
+            for tile in self.scenes[scene].tilemap.tiles:
+                if tile.plant is not None and self.scenes[scene] is not self.scene:
+                    tile.plant.loop(False)
 
     def initScenes(self):
         self.scenes = {
