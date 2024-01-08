@@ -2,6 +2,7 @@ import pygame, pickle, os
 from data.inventoryui import InventoryUI
 from data.plant import Plant
 from data.player import Player
+from data.scenes.field.field import Field
 from data.scenes.home.home import Home
 from data.scenes.store.store import Store
 from data.scenes.town.town import Town
@@ -57,7 +58,8 @@ class Core:
         self.scenes = {
             "home": Home(self),
             "town": Town(self),
-            "store": Store(self)
+            "store": Store(self),
+            "field": Field(self)
         }
 
     def changeScene(self, scene):

@@ -26,15 +26,20 @@ class Home(Scene):
 
     def checkpos(self):
         if self.core.player.y < 1:
-            self.core.player.y = 0
+            self.core.changeScene("field")
+            self.core.scene.positionPlayer()
         if self.core.player.y >= self.core.screen.get_height() - self.core.player.h:
             self.core.player.y = self.core.screen.get_height() - self.core.player.h
         if self.core.player.x >= self.core.screen.get_width():
             self.core.changeScene("town")
             self.core.scene.positionPlayer()
 
-    def positionPlayer(self):
-        self.core.player.x = self.core.screen.get_width() - 100
+    def positionPlayer(self, fromfield = False):
+        if fromfield:
+            self.core.player.x = self.core.screen.get_width() / 2
+            self.core.player.y = 100
+        else:
+            self.core.player.x = self.core.screen.get_width() - 100
 
     def initClutter(self):
         self.add(Animal(self.core, (1200, 700), "data/assets/Elements/Animals/spr_deco_cow_strip4.png"))
