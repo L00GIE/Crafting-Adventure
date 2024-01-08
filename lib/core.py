@@ -1,5 +1,6 @@
 import pygame, pickle, os
 from data.inventoryui import InventoryUI
+from data.plant import Plant
 from data.player import Player
 from data.scenes.home.home import Home
 from data.scenes.store.store import Store
@@ -68,14 +69,21 @@ class Core:
     def save(self):
         savedata = {
             "inventory": self.player.inventory,
-            "tiledata": {}
+            "tiledata": {},
+            "plantdata": {}
         }
         for scene in self.scenes:
             savedata["tiledata"][scene] = []
+            savedata["plantdata"][scene] = []
             if hasattr(self.scenes[scene], "tilemap"):
                 if self.scenes[scene].tilemap is not None:
                     for tile in self.scenes[scene].tilemap.tiles:
                         savedata["tiledata"][scene].append(tile.tileindex)
+                        if tile.plant is not None:
+                            savedata["plantdata"][scene].append({"type": tile.plant.type, "stage": tile.plant.stage})
+                        else:
+                            savedata["plantdata"][scene].append(None)
+
         pickle.dump(savedata, open('game.save', 'wb'), protocol=pickle.HIGHEST_PROTOCOL)
 
     def load(self):
@@ -91,3 +99,15 @@ class Core:
                         tile.barrier = tile.checkBarrier()
                         tile.changeImage()
                         index += 1
+        for scene in savedata["plantdata"]:
+            index = 0
+            for plantdata in savedata["plantdata"][scene]:
+                tile = self.scenes[scene].tilemap.tiles[index]
+                if plantdata is not None:
+                    tile.plant = Plant(self, tile, plantdata["type"], stage=plantdata["stage"])
+                else:
+                    tile.plant = None
+                    tile.canplant = True
+                index += 1
+
+

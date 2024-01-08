@@ -3,7 +3,7 @@ import pygame
 
 class Plant:
 
-    def __init__(self, core, tile, type):
+    def __init__(self, core, tile, type, stage = 1):
         self.core = core
         self.tile = tile
         self.type = type
@@ -12,7 +12,7 @@ class Plant:
         self.x = self.tile.x + ((48 / 2) - (self.w / 2))
         self.y = self.tile.y + ((48 / 2) - (self.h / 2))
         self.starty = self.y
-        self.stage = 1
+        self.stage = stage
         self.initSprite()
         self.collider = Collider(self, debug=False)
         self.timer = 0
@@ -46,6 +46,7 @@ class Plant:
     def detectPickup(self):
         if self.core.player.collider.colliding(self):
             self.tile.plant = None
+            self.tile.canplant = True
             self.core.player.inventory["crops"][self.type] += 1
 
     def initSprite(self):
